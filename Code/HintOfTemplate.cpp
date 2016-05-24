@@ -29,8 +29,8 @@ int main(int argc, char const *argv[]) {
 		cout << "Template cols and rows: " << bannerTemplate.cols << " " << bannerTemplate.rows << endl;
 	#endif
 
-	ifstream asinRegion("AsinRegion.txt");
-	ifstream textRegion("TextRegion.txt");
+	ifstream asinRegion("../Resource/AsinRegion.txt");
+	ifstream textRegion("../Resource/TextRegion.txt");
 
 	RNG rng(0xFFFFFFFF);
 
