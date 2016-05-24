@@ -1,3 +1,0 @@
-/home/local/ANT/huazhesi/Documents/OpenCVGit/Build/CMakeFiles/EliminateBackground.dir
-/home/local/ANT/huazhesi/Documents/OpenCVGit/Build/CMakeFiles/HintOfTemplate.dir
-/home/local/ANT/huazhesi/Documents/OpenCVGit/Build/CMakeFiles/SeamlessCloning.dir
