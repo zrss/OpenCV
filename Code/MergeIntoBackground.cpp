@@ -10,7 +10,7 @@
 using namespace cv;
 using namespace std;
 
-#define OPENCV_DEBUG_NO
+#define OPENCV_DEBUG
 
 static int flags = 4 + (255 << 8) + FLOODFILL_FIXED_RANGE;
 
@@ -77,7 +77,14 @@ void approachOfRect(Mat& src, Mat& gray, Mat& output, int thresh) {
         }
     }
 
-    src(Range(miny, maxy + 1), Range(minx, maxx + 1)).copyTo(output);
+	#ifdef OPENCV_DEBUG
+		cout << "rows and cols: " << src.rows << " " << src.cols << endl;
+
+		cout << "Range(" << miny << "," << maxy << ")" << " "
+			<< "Range(" << minx << "," << maxx << ")" << endl;
+    #endif
+
+    src(Range(miny, maxy), Range(minx, maxx)).copyTo(output);
 
 	#ifdef OPENCV_DEBUG
 		cout << "approachOfRect ending" << endl;
@@ -137,9 +144,11 @@ void uniformScale(Mat& src, Mat& dst, Mat& output) {
     }
 
     // 宽度缩放
-    if ((int)(scale * src.cols) > dst.cols) {
-        scale = (double)dst.cols / src.cols;
-        flagResize = true;
+    if (src.cols > dst.cols) {
+    	if (!flagResize || (int)(scale * src.cols) > dst.cols) {
+	        scale = (double)dst.cols / src.cols;
+    	}
+    	flagResize = true;
     }
 
     #ifdef OPENCV_DEBUG
@@ -229,10 +238,6 @@ int main(int argc, char const *argv[]) {
 
 		Mat asin = imread(asinNameText, IMREAD_UNCHANGED);
 
-		#ifdef OPENCV_DEBUG
-			imshow("asin", asin);
-		#endif
-
 		// TODO: height / width rate
 
 		Mat gray;
@@ -242,7 +247,6 @@ int main(int argc, char const *argv[]) {
 		approachOfRect(asin, gray, shrink, 250);
 
 		Mat regionMat(width, height, CV_8UC1);
-
 		Mat fit;
 		uniformScale(shrink, regionMat, fit);
 
@@ -253,6 +257,7 @@ int main(int argc, char const *argv[]) {
 		int gapy = (height - png.rows) >> 1;
 
 		#ifdef OPENCV_DEBUG
+			cout << "original x and y: " << x << ", " << y << endl;
 			cout << "offset gapx and gapy: " << gapx << ", " << gapy << endl;	
 		#endif
 
