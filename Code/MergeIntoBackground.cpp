@@ -10,7 +10,7 @@
 using namespace cv;
 using namespace std;
 
-#define OPENCV_DEBUG
+#define OPENCV_DEBUG_NO
 
 static int flags = 4 + (255 << 8) + FLOODFILL_FIXED_RANGE;
 
@@ -110,13 +110,13 @@ void AutoFloodFill(Mat& image, Mat& png) {
     floodFill(cpyImage, mask, seedUpRight, Scalar(200, 200, 200), 0, Scalar(20, 20, 20), Scalar(20, 20, 20), flags);
     floodFill(cpyImage, mask, seedDownLeft, Scalar(200, 200, 200), 0, Scalar(20, 20, 20), Scalar(20, 20, 20), flags);
     floodFill(cpyImage, mask, seedDownRight, Scalar(200, 200, 200), 0, Scalar(20, 20, 20), Scalar(20, 20, 20), flags);
-
+  	
     // reverse
     Mat alpha;
     threshold(mask, alpha, 254, 255, CV_THRESH_BINARY_INV);
 
     // filter
-    medianBlur(alpha, alpha, 3);
+    // medianBlur(alpha, alpha, 3);
 
     // split to 3 channels BGR
     Mat bgr[3];
