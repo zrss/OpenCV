@@ -10,7 +10,7 @@
 using namespace cv;
 using namespace std;
 
-#define OPENCV_DEBUG_NO
+#define OPENCV_DEBUG
 
 static int flags = 4 + (255 << 8) + FLOODFILL_FIXED_RANGE;
 
